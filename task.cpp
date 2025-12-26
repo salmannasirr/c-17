@@ -1,47 +1,55 @@
 #include <iostream>
 #include <cmath>
-#include <iomanip>
 
-using std::cin;
 using std::cout;
 using std::endl;
+using std::cin;
 
 int main(){
-    int h_inches;
-    int d_feet;
-    int d_inches;
-    float angle;
-    cout << "This program calculates the height of the tree based on the following parameters...\n"
-         << "\t-h(height of your eye when looking into a angle measuring device) in inches: type(h) = int\n"
-         << "\t-d(distance you are from the tree) in feet and inches: type(d) = int\n"
-         << "\t-a(angle from the angle measuring device) in degrees: type(a) = float" << endl;
+    int erste_nummer;
+    int zweite_nummer;
 
-    cout << "Please enter h:";
-    cin >> h_inches;
-
-    cout << "Please enter d_feet:";
-    cin >> d_feet;
-
-    cout << "Please enter d_inches:";
-    cin >> d_inches;
-
-    cout << "Please enter the angle:";
-    cin >> angle;
-    cout << endl;
-
+    cout << "This program identifies the larger integer and the smaller integer from the user input" << endl;
+    cout << "Please enter a positive integer: "; cin >> erste_nummer;
+    cout << "Please enter another positive integer: "; cin >> zweite_nummer;
+    
     if (!cin ||
-        !std::isfinite(h_inches) ||
-        !std::isfinite(d_feet) ||
-        !std::isfinite(d_inches) ||
-        !std::isfinite(angle)){
-            cout << "Aborting program as invalid value entered by user..." << endl;
-            return 1;
-        }
+//    !std::isfinite(erste_nummer) || skipping this because isfinite() works for float types
+//    !std::isfinite(zweite_nummer) ||
+    erste_nummer <=0 ||
+    zweite_nummer <=0
+    )
+    {
+    cout << "Invalid input detected, Aborting......." << endl;
+    return 1;
+    }
 
-    const auto height_of_tree = h_inches + (d_feet*12 + d_inches)*tan((angle * M_PI/180));
-
-    cout << std::setw(35) << std::setfill('-') << "Height of tree: " << height_of_tree 
-         << std::setw(20) << "" << endl;
+    cout << "Greater integer is: " << std::max(erste_nummer, zweite_nummer) << endl;
+    cout << "Smaller integer is: " << std::min(erste_nummer, zweite_nummer) << endl;
 
     return 0;
 }
+
+/*This is the safest way to parse input as suggested by AI:
+bool read_positive_int(int& value) {
+    std::string line;
+    if (!std::getline(std::cin, line))
+        return false; // EOF or stream error
+
+    std::stringstream ss(line);
+    int temp;
+    char extra;
+
+    if (!(ss >> temp) || (ss >> extra) || temp <= 0)
+        return false;
+
+    value = temp;
+    return true;
+}
+int x;
+std::cout << "Enter a positive integer: ";
+
+if (!read_positive_int(x)) {
+    std::cout << "Invalid input\n";
+}
+*/
